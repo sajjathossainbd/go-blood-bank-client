@@ -3,7 +3,8 @@ import Logo from "./../../assets/logo.png";
 import useAuth from "../../hooks/useAuth";
 
 function Navbar() {
-  const { user, logOut } = useAuth;
+  const { user, logOut } = useAuth();
+  console.log(user);
   const navLinks = (
     <>
       <NavLink
@@ -117,7 +118,7 @@ function Navbar() {
             </div>
             <button
               onClick={() => logOut()}
-              className="btn bg-[#e76741] hover:bg-[#FFA488] text-white mr-4 px-5"
+              className="btn bg-[#FF5364] hover:bg-[#d64251] text-white mr-4 px-5"
             >
               Logout
             </button>

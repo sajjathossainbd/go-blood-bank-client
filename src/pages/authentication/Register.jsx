@@ -5,34 +5,56 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../hooks/useAuth";
 import SocialLogin from "../../components/SocialLogin";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useForm } from "react-hook-form";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { createUser } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const name = event.target.name.value;
-    const email = event.target.email.value;
-    const url = event.target.url.value;
-    const password = event.target.password.value;
-
-    // Password Verification
-    if (password.length < 6) {
-      alert("Password must be at least 6 characters long");
-      return;
-    }
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])/;
-    if (!passwordRegex.test(password)) {
-      alert("Please Provide Uppercase and Lowercase letters");
-      return;
-    }
-
-    createUser(email, password, name, url, navigate);
+  const onSubmit = (data) => {
+    createUser(data.email, data.password).then((result) => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+      updateUserProfile(data.name, data.photoURL)
+        .then(() => {
+          // create user entry in the database
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+            avatar: data.photoURL,
+            bloodGroup: data.bloodGroup,
+            distric: data.distric,
+            upazila: data.upazila,
+          };
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user added to the database");
+              reset();
+              Swal.fire({
+                icon: "success",
+                title: "Account Create Successfully!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/");
+            }
+          });
+        })
+        .catch((error) => console.log(error));
+    });
   };
+
   return (
     <>
       <Helmet>
@@ -43,18 +65,7 @@ function Register() {
           Register your account
         </h2>
         <div className="w-full">
-          <form onSubmit={handleSubmit} className="card-body ">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Full Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="full name"
-                className="input input-bordered"
-                name="name"
-              />
-            </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body ">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -64,7 +75,19 @@ function Register() {
                 placeholder="email"
                 className="input input-bordered"
                 name="email"
-                required
+                {...register("email", { required: true })}
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Full Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="full name"
+                className="input input-bordered"
+                name="name"
+                {...register("name", { required: true })}
               />
             </div>
             <div className="form-control">
@@ -75,8 +98,75 @@ function Register() {
                 type="text"
                 placeholder="link..."
                 className="input input-bordered"
-                name="url"
+                {...register("photURL", { required: true })}
               />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Blood Group</span>
+              </label>
+              <select
+                {...register("bloodGroup", { required: true })}
+                className="select select-bordered w-full"
+              >
+                <option disabled selected>
+                  Select Blood Group
+                </option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+                <option>O+</option>
+                <option>O-</option>
+              </select>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Distric</span>
+              </label>
+              <select
+                {...register("distric", { required: true })}
+                className="select select-bordered w-full "
+              >
+                <option disabled selected>
+                  Select A Distric
+                </option>
+                <option>Dhaka</option>
+                <option>Cumilla</option>
+                <option>Sunamganj</option>
+                <option>Sylhet</option>
+                <option>Tangail</option>
+                <option>Narail</option>
+                <option>Kushtia</option>
+                <option>Jessore</option>
+                <option>Bandarban</option>
+                <option>Bagerhat</option>
+              </select>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Upazila</span>
+              </label>
+              <select
+                {...register("upazila", { required: true })}
+                className="select select-bordered w-full"
+              >
+                <option disabled selected>
+                  Select A Upazila
+                </option>
+                <option>Mohalchari</option>
+                <option>Fatikchhari</option>
+                <option>Mirsharai</option>
+                <option>Sonaimori</option>
+                <option>Sonaimori</option>
+                <option>Kabirhat</option>
+                <option>Bijoynagar</option>
+                <option>Nabinagar</option>
+                <option>Daudkandi</option>
+                <option>Debidwar</option>
+              </select>
             </div>
             <div className="form-control">
               <label className="label">
@@ -88,7 +178,27 @@ function Register() {
                   placeholder="password"
                   className="input input-bordered w-full"
                   name="password"
-                  required
+                  {...register("password", { required: true })}
+                />
+                <span
+                  className="absolute top-4 right-5"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                </span>
+              </div>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="password"
+                  className="input input-bordered w-full"
+                  name="password"
+                  {...register("password", { required: true })}
                 />
                 <span
                   className="absolute top-4 right-5"

@@ -6,9 +6,16 @@ import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import SocialLogin from "../../components/SocialLogin";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const { signIn } = useAuth();
   const navigate = useNavigate();
@@ -16,27 +23,20 @@ function Login() {
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    console.log(email, password);
-    signIn(email, password).then((result) => {
+  const onSubmit = (data) => {
+    signIn(data.email, data.password).then((result) => {
       const user = result.user;
-      console.log(user);
+      reset(), console.log(user);
       Swal.fire({
-        title: "User Login Successful.",
-        showClass: {
-          popup: "animate__animated animate__fadeInDown",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutUp",
-        },
+        icon: "success",
+        title: "Account Login Successfully!",
+        showConfirmButton: false,
+        timer: 1500,
       });
       navigate(from, { replace: true });
     });
   };
+
   return (
     <>
       <Helmet>
@@ -48,7 +48,7 @@ function Login() {
           Login your account
         </h2>
         <div className="w-full">
-          <form onSubmit={handleSubmit} className="card-body ">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body ">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -58,7 +58,7 @@ function Login() {
                 placeholder="email"
                 className="input input-bordered"
                 name="email"
-                required
+                {...register("email", { required: true })}
               />
             </div>
             <div className="form-control">
@@ -71,7 +71,7 @@ function Login() {
                   placeholder="password"
                   className="input input-bordered w-full"
                   name="password"
-                  required
+                  {...register("password", { required: true })}
                 />
                 <span
                   className="absolute top-4 right-5"
