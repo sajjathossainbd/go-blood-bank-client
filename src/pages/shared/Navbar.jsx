@@ -28,7 +28,7 @@ function Navbar() {
         Donation Requests
       </NavLink>
       <NavLink
-        to={`/blog`}
+        to={`/blogs`}
         className={({ isActive }) =>
           isActive
             ? "btn px-6 border-[0.6px] border-[#FF5364] hover:border-[#FF5364] text-[#FF5364] rounded-lg bg-white hover:bg-white"
@@ -109,7 +109,7 @@ function Navbar() {
                   {user && user.displayName ? user.displayName : "Unknown"}
                 </h2>
                 <li>
-                  <Link to={"/dashboard"}>Dashboard Profile</Link>
+                  <Link to={"/dashboard"}>Dashboard</Link>
                 </li>
                 <li>
                   <a>Settings</a>
