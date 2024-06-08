@@ -12,7 +12,7 @@ import {
 import auth from "../firebase/firebase.config";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext("");
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
