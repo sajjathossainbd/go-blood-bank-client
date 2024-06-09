@@ -1,9 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
 import Logo from "./../../assets/logo.png";
 import useAuth from "../../hooks/useAuth";
+import LoadingSpinner from "../../components/shared/LoadingSpinner";
 
 function Navbar() {
-  const { user, logOut } = useAuth();
+  const { user, logOut, loading } = useAuth();
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   const navLinks = (
     <>
       <NavLink

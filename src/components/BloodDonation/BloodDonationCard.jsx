@@ -41,7 +41,7 @@ function BloodDonationCard({ donor }) {
         {/* ending */}
         <div className="card-actions justify-end">
           <Link
-            to="/blood-donation-details"
+            to={`/blood-donation-details/${donor?._id}`}
             onClick={handleViewDetails}
             className="btn btn-outline"
           >
