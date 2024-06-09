@@ -7,9 +7,6 @@ import { Link } from "react-router-dom";
 function BloodDonationCard({ donor }) {
   const { recipient_name, location, date, time } = donor;
 
-  const handleViewDetails = () => {
-    console.log("View Details", donor);
-  };
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body">
@@ -23,7 +20,7 @@ function BloodDonationCard({ donor }) {
         <div className="flex justify-between mt-3">
           <p className="flex gap-2 items-center">
             <span className="font-bold">
-              <MdOutlineDateRange />{" "}
+              <MdOutlineDateRange />
             </span>
             {date}
           </p>
@@ -42,7 +39,6 @@ function BloodDonationCard({ donor }) {
         <div className="card-actions justify-end">
           <Link
             to={`/blood-donation-details/${donor?._id}`}
-            onClick={handleViewDetails}
             className="btn btn-outline"
           >
             View Details
