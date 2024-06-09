@@ -6,11 +6,13 @@ import Register from "../pages/authentication/Register";
 import DonationRequest from "../pages/donationRequest/DonationRequest";
 import Blogs from "../pages/blogs/Blogs";
 import DashboardRoot from "../pages/dashboard/DashboardRoot";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
