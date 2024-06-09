@@ -3,10 +3,11 @@ import Root from "../layout/Root";
 import Home from "../pages/home/Home";
 import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
-import DonationRequest from "../pages/donationRequest/DonationRequest";
 import Blogs from "../pages/blogs/Blogs";
 import DashboardRoot from "../pages/dashboard/DashboardRoot";
 import ErrorPage from "../pages/ErrorPage";
+import BloodDonation from "../pages/bloodDonation/BloodDonation";
+import BloodDonationDetails from "../pages/bloodDonation/BloodDonationDetails";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/donation-requests",
-        element: <DonationRequest />,
+        element: <BloodDonation />,
+      },
+      {
+        path: "/blood-donation-details",
+        element: <BloodDonationDetails />,
       },
       {
         path: "/blogs",
