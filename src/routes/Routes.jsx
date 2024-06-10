@@ -14,6 +14,7 @@ import HomeStatistics from "../pages/dashboard/common/HomeStatistics";
 import Profile from "../pages/dashboard/common/Profile";
 import Search from "../pages/search/Search";
 import BlogDetails from "../pages/blogs/BlogDetails";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/blood-donation-details/:id",
-        element: <BloodDonationDetails />,
+        element: (
+          <PrivateRoute>
+            <BloodDonationDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blogs",
@@ -51,7 +56,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/blogs/:id",
-        element: <BlogDetails />,
+        element: (
+          <PrivateRoute>
+            <BlogDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
