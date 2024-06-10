@@ -12,6 +12,7 @@ import CreateDonation from "../pages/dashboard/donor/CreateDonation";
 import DashboardLayout from "../layout/DashboardLayout";
 import HomeStatistics from "../pages/dashboard/common/HomeStatistics";
 import Profile from "../pages/dashboard/common/Profile";
+import Search from "../pages/search/Search";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
       {
         path: "/donation-requests",
@@ -61,7 +66,7 @@ const router = createBrowserRouter([
 
       // DONOR ROUTES
       {
-        path: "create-donation",
+        path: "create-donation-request",
         element: <CreateDonation />,
       },
       {
