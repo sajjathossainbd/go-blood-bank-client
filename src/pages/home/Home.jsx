@@ -1,4 +1,5 @@
 import Banner from "../../components/home/Banner";
+import Featured from "../../components/home/Featured";
 import LoadingSpinner from "../../components/shared/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
 
@@ -10,6 +11,7 @@ function Home() {
   return (
     <div>
       <Banner />
+      <Featured />
     </div>
   );
 }
