@@ -28,8 +28,9 @@ function Login() {
     try {
       setLoading(true);
       await signIn(data.email, data.password).then((result) => {
+        // eslint-disable-next-line no-unused-vars
         const user = result.user;
-        reset(), console.log(user);
+        reset(), 
         Swal.fire({
           icon: "success",
           title: "Account Login Successfully!",

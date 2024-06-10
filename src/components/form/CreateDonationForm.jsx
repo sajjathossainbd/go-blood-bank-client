@@ -2,10 +2,18 @@ import useUpazila from "../../hooks/useUpazila";
 import useDistric from "../../hooks/useDistric";
 import { useForm } from "react-hook-form";
 import LoadingSpinner from "../shared/LoadingSpinner";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function CreateDonationForm() {
+  const { user } = useAuth();
   const [upazila, upazilaLoading] = useUpazila();
   const [distric, districLoading] = useDistric();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  // const from = location.state?.from?.pathname || "dashboard/my-donation";
   const {
     register,
     handleSubmit,
@@ -17,11 +25,39 @@ function CreateDonationForm() {
     return <LoadingSpinner />;
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const status = "pending";
-    const createDonation = { data, status };
-
-    reset();
+    const donationInfo = {
+      status,
+      recipient_name: data.recipient_name,
+      district: data.district,
+      upazila: data.upazila,
+      hospital_name: data.hospital_name,
+      address: data.address,
+      date: data.date,
+      time: data.time,
+      name: user.displayName,
+      email: user.email,
+    };
+    try {
+      const donationRes = await axiosSecure.post(
+        "/blood-donation",
+        donationInfo
+      );
+      console.log(donationRes.data);
+      if (donationRes.data.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Donation Request Create Successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/dashboard/my-donation");
+      }
+      reset();
+    } catch {
+      console.log(errors);
+    }
   };
 
   return (
