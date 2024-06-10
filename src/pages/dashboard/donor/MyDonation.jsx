@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../../components/shared/LoadingSpinner";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 function MyDonation() {
   const { user } = useAuth();
@@ -18,6 +19,31 @@ function MyDonation() {
     },
   });
   refetch();
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/blood-donation/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -53,7 +79,12 @@ function MyDonation() {
                   <button className="btn">Update</button>
                 </td>
                 <td className="">
-                  <button className="btn btn-error">Delete</button>
+                  <button
+                    onClick={() => handleDelete(donor._id)}
+                    className="btn btn-error"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
