@@ -36,7 +36,7 @@ const Sidebar = () => {
         <span className="mx-4 font-medium">Donor Home</span>
       </NavLink>
       <NavLink
-        to="my-donation"
+        to="my-donation-requests"
         className={({ isActive }) =>
           `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#FF5364] rounded-md  hover:text-white ${
             isActive ? "bg-[#FF5364]  text-white" : "text-gray-600 rounded-md"

@@ -27,8 +27,13 @@ function CreateDonationForm() {
 
   const onSubmit = async (data) => {
     const status = "pending";
+    const donor = {
+      name: user.displayName,
+      email: user.email,
+    };
     const donationInfo = {
       status,
+      donor,
       recipient_name: data.recipient_name,
       district: data.district,
       upazila: data.upazila,
@@ -36,8 +41,6 @@ function CreateDonationForm() {
       address: data.address,
       date: data.date,
       time: data.time,
-      name: user.displayName,
-      email: user.email,
     };
     try {
       const donationRes = await axiosSecure.post(
@@ -52,7 +55,7 @@ function CreateDonationForm() {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/dashboard/my-donation");
+        navigate("/dashboard/my-donation-requests");
       }
       reset();
     } catch {
