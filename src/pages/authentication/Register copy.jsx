@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
 import { ImSpinner9 } from "react-icons/im";
+import axios from "axios";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,18 +25,33 @@ function Register() {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    console.log(data);
+    const imageFile = data.photURL[0];
+    const formData = new FormData();
+    formData.append("image", imageFile);
     try {
       setLoading(true);
+      // Upload Image URL to Server
+      const { data } = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMAGEBB_API_KEY
+        }`,
+        formData
+      );
+      console.log(data.data.display_url);
+      console.log(formData);
+
+      // User Register
       await createUser(data.email, data.password).then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
-        updateUserProfile(data.name, data.photoURL)
+        updateUserProfile(data.name, data.data.display_url)
           .then(() => {
             // create user entry in the database
             const userInfo = {
               name: data.name,
               email: data.email,
-              avatar: data.photoURL,
+              avatar: data.data.display_url,
               bloodGroup: data.bloodGroup,
               distric: data.distric,
               upazila: data.upazila,
@@ -99,13 +115,12 @@ function Register() {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Photo URL</span>
+                <span className="label-text">Upload Image</span>
               </label>
               <input
-                type="text"
-                placeholder="link..."
-                className="input input-bordered"
                 {...register("photURL", { required: true })}
+                type="file"
+                className="file-input file-input-bordered file-input-error w-full"
               />
             </div>
             <div className="form-control">
