@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Banner() {
   return (
-    <div>
+    <div className="max-sm:px-4">
       <div className="carousel w-full mt-5">
         <div id="slide1" className="carousel-item relative w-full h-[500px]">
           <div className="absolute flex items-center bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] h-full rounded-xl">
@@ -45,7 +45,10 @@ function Banner() {
                 Join the Movement, Donate Blood Today, and Make a Meaningful{" "}
                 <br /> Impact in Your Community.
               </p>
-              <Link to="/search" className="btn bg-[#FA5D3F] hover:bg-[#d35036] text-white mr-4 px-5 border-none mt-6">
+              <Link
+                to="/search"
+                className="btn bg-[#FA5D3F] hover:bg-[#d35036] text-white mr-4 px-5 border-none mt-6"
+              >
                 Search Donors
               </Link>
             </div>

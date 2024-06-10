@@ -6,7 +6,7 @@ import { FaAward } from "react-icons/fa";
 
 function Featured() {
   return (
-    <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 my-20">
+    <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 my-20 max-sm:px-6">
       <FeaturedCard
         icon={<BiSolidDonateBlood />}
         title="45234"
