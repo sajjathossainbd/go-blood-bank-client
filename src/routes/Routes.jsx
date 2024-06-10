@@ -13,6 +13,7 @@ import DashboardLayout from "../layout/DashboardLayout";
 import HomeStatistics from "../pages/dashboard/common/HomeStatistics";
 import Profile from "../pages/dashboard/common/Profile";
 import Search from "../pages/search/Search";
+import BlogDetails from "../pages/blogs/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/blogs/:id",
+        element: <BlogDetails />,
       },
     ],
   },
