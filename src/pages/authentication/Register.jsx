@@ -8,6 +8,7 @@ import SocialLogin from "../../components/SocialLogin";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
+import { ImSpinner9 } from "react-icons/im";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,40 +20,46 @@ function Register() {
     reset,
     formState: { errors },
   } = useForm();
-  const { createUser, updateUserProfile } = useAuth();
+  const { createUser, updateUserProfile, loading, setLoading } = useAuth();
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    createUser(data.email, data.password).then((result) => {
-      const loggedUser = result.user;
-      console.log(loggedUser);
-      updateUserProfile(data.name, data.photoURL)
-        .then(() => {
-          // create user entry in the database
-          const userInfo = {
-            name: data.name,
-            email: data.email,
-            avatar: data.photoURL,
-            bloodGroup: data.bloodGroup,
-            distric: data.distric,
-            upazila: data.upazila,
-          };
-          axiosPublic.post("/users", userInfo).then((res) => {
-            if (res.data.insertedId) {
-              console.log("user added to the database");
-              reset();
-              Swal.fire({
-                icon: "success",
-                title: "Account Create Successfully!",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              navigate("/");
-            }
-          });
-        })
-        .catch((error) => console.log(error));
-    });
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      await createUser(data.email, data.password).then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            // create user entry in the database
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+              avatar: data.photoURL,
+              bloodGroup: data.bloodGroup,
+              distric: data.distric,
+              upazila: data.upazila,
+            };
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log("user added to the database");
+                reset();
+                Swal.fire({
+                  icon: "success",
+                  title: "Account Create Successfully!",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/");
+              }
+            });
+          })
+          .catch((error) => console.log(error));
+      });
+    } catch {
+      console.log(errors);
+      setLoading(false);
+    }
   };
 
   return (
@@ -106,10 +113,11 @@ function Register() {
                 <span className="label-text">Blood Group</span>
               </label>
               <select
+                defaultValue="default"
                 {...register("bloodGroup", { required: true })}
                 className="select select-bordered w-full"
               >
-                <option disabled selected>
+                <option disabled  value="default">
                   Select Blood Group
                 </option>
                 <option>A+</option>
@@ -127,10 +135,11 @@ function Register() {
                 <span className="label-text">Distric</span>
               </label>
               <select
+                defaultValue="default"
                 {...register("distric", { required: true })}
                 className="select select-bordered w-full "
               >
-                <option disabled selected>
+                <option disabled  value="default">
                   Select A Distric
                 </option>
                 <option>Dhaka</option>
@@ -150,10 +159,11 @@ function Register() {
                 <span className="label-text">Upazila</span>
               </label>
               <select
+                defaultValue="default"
                 {...register("upazila", { required: true })}
                 className="select select-bordered w-full"
               >
-                <option disabled selected>
+                <option disabled value="default">
                   Select A Upazila
                 </option>
                 <option>Mohalchari</option>
@@ -209,8 +219,16 @@ function Register() {
               </div>
             </div>
             <div className="form-control mt-6">
-              <button className="btn  bg-[#FF5364] hover:bg-[#eb3e4f] text-xl text-white">
-                Register
+              <button
+                disabled={loading}
+                type="submit"
+                className="btn  bg-[#FF5364] hover:bg-[#eb3e4f] text-xl text-white"
+              >
+                {loading ? (
+                  <ImSpinner9 className="animate-spin m-auto" />
+                ) : (
+                  "Register"
+                )}
               </button>
             </div>
           </form>

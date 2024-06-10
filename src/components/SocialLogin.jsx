@@ -4,11 +4,12 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
-    const { googleSignIn } = useAuth();
-    const axiosPublic = useAxiosPublic();
-    const navigate = useNavigate();
+  const { googleSignIn, loading, setLoading } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const handleGoogle = () => {
+    setLoading(true);
     googleSignIn().then((result) => {
       console.log(result.user);
       const userInfo = {
@@ -20,6 +21,7 @@ const SocialLogin = () => {
         navigate("/");
       });
     });
+    setLoading(false);
   };
 
   return (
@@ -28,7 +30,7 @@ const SocialLogin = () => {
         Or Continue With
       </h2>
       <div className="flex items-center justify-center gap-6 text-5xl">
-        <button onClick={handleGoogle}>
+        <button disabled={loading} onClick={handleGoogle}>
           <FcGoogle className="cursor-pointer" />
         </button>
       </div>
