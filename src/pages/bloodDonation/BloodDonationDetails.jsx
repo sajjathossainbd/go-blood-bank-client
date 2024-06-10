@@ -19,6 +19,8 @@ function BloodDonationDetails() {
     },
   });
 
+  console.log(donor);
+
   const { recipient_name, location, date, time, status } = donor;
   console.log(donor);
 

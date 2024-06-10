@@ -2,11 +2,12 @@
 
 **Live site:**
 
-- [GoBlood Bank](https:/goblood-bank.web.app)
+- [GoBlood Bank](https://goblood-bank.web.app)
 
 ## Admin Email And Password
-1. sajjad@gmail.com
-2. Sajjad@123
+
+1. Email: sajjad@gmail.com
+2. Password: Sajjad@123
 
 ## Features and Characteristics:
 
