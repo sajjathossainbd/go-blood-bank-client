@@ -39,12 +39,24 @@ Please follow the instructions to run this repository on your machine:
     cd go-blood-bank-client
     ```
 3. Install project Dependencies
+   
+   If you use Yarn:
     ```sh
-    yarn add // npm install
+    yarn add
     ```
-4. Run Project
+   Or if you use npm:
     ```sh
-    yarn dev // npm start
+    npm install
+    ```
+5. Run project local machine
+   
+    If you use Yarn:
+    ```sh
+    yarn dev
+    ```
+   Or if you use npm:
+    ```sh
+    npm start
     ```
 
 
