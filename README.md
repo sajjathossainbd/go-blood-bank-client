@@ -8,8 +8,8 @@
 
 - [GoBlood Bank - Server Site Repo](https://github.com/sajjathossainbd/go-blood-bank-server)
 
-## Admin Email And Password
-
+## Credential:
+Admin Email and password
 1. Email: sajjad@gmail.com
 2. Password: Sajjad@123
 
@@ -59,19 +59,40 @@ Please follow the instructions to run this repository on your machine:
     npm start
     ```
 
+## Additional Information
+- **Environment Variables:**
+  - Create a `.env.local` file in the root of your client project and add the following variables:
+    ```plaintext
+    VITE_API_KEY=Your firebase config file
+    VITE_AUTH_DOMAIN=Your firebase config file
+    VITE_PROJECT_ID=Your firebase config file
+    VITE_STORAGE_BUCKET=Your firebase config file
+    VITE_MESSAGING_SENDER_ID=Your firebase config file
+    VITE_APP_ID=Your firebase config file
+    VITE_API_BASE_URL=Your firebase config file
+    VITE_IMAGEBB_API_KEY=your imageBB Api key
+    ```
 
 
+## Resources and Dependencies:
+- [React](https://react.dev/) - A JavaScript library for building user interfaces.
+- [React Router Dom](https://reactrouter.com/en/main) - Declarative routing for React applications.
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [Daisy UI](https://daisyui.com/) - Component library for Tailwind CSS
+- [Firebase](https://console.firebase.google.com/) - Firebase is a set of backend cloud computing services
+- [React Icon](https://react-icons.github.io/react-icons/) - Include popular icons in your React projects easily with react-icons.
+- [React Helmet Async](https://www.npmjs.com/package/react-helmet-async) - Dynamic header title change
+- [Sweetalert2](etalert2.github.io) - Beautiful, responsive, customizable replacement for JavaScript's popup boxes
+- [Tanstack Query](https://github.com/TanStack/query) - Powerful asynchronous state management, fetching, caching, and updating data in React.
+- [Axios](https://www.axios.com/) - Promise-based HTTP client for the browser and Node.js.
+- [React Hook Form](https://react-hook-form.com/) - Performant, flexible and extensible forms with easy-to-use validation.
+- [Swiper](https://swiperjs.com/) - The Most Modern Mobile Touch Slider
 
-## Resources:
 
-- [React Router Dom](https://reactrouter.com/en/main)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Daisy UI](https://daisyui.com/)
-- [Firebase](https://console.firebase.google.com/)
-- [React Icon](https://react-icons.github.io/react-icons/)
-- [React Helmet Async](hhttps://www.npmjs.com/package/react-helmet-async)
-- [Tanstack Query](https://github.com/TanStack/query)
-- [Axios](https://www.axios.com/)
-- [React Hook Form](https://react-hook-form.com/)
-- [Sweetalert2](etalert2.github.io)
-- [Swiper](https://swiperjs.com/)
+## Contributing
+
+If you'd like to contribute to this project, please fork the repository and use a feature branch. Pull requests are welcome.
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE).
