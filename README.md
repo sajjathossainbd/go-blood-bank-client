@@ -26,6 +26,30 @@
 9. **Responsive Design:** Optimized website layout that seamlessly adapts to various devices (mobile, tablet, desktop) for a smooth user experience across all platforms.
 10. **Funding Integration (Optional):** Optional feature for users to contribute financially to support the organization's blood donation efforts (requires Stripe payment integration).
 
+
+## How to run:
+Please follow the instructions to run this repository on your machine:
+
+1. Clone this repository -
+    ```sh
+    git clone https://github.com/sajjathossainbd/go-blood-bank-client.git
+    ```
+2. Go to the cloned project directory
+    ```sh
+    cd go-blood-bank-client
+    ```
+3. Install project Dependencies
+    ```sh
+    yarn add // npm install
+    ```
+4. Run Project
+    ```sh
+    yarn dev // npm start
+    ```
+
+
+
+
 ## Resources:
 
 - [React Router Dom](https://reactrouter.com/en/main)
